@@ -15,29 +15,46 @@ cor(SEDA$CritTrms,SEDA$CDItrms,use = "complete.obs")
 ```{r}
 cor(SEDA$RosT,SEDA$CDIt,use = "complete.obs")
 ```
-
 2. ANOVA test comparing boys and girls to their levels of self-criticism (CritT), self-esteem(RosT), and depression(CDIt).(boy=0; girl=1); make new columns for boys and girls, self-criticism, self-esteem, and depression. 
 ```{r}
 #Columns Set-up 
 SEDA$SexALL #1=girls, 0=boys
-SEDA$CritT
-SEDA$RosT
-SEDA$CDIt
+SEDA$CritT #self-criticism
+SEDA$RosT #self-esteem
+SEDA$CDIt #depression
 
+#Columns 
 SEDA2<-SEDA[,c(5,88,101,205)]
+
+#Separating Columns via Gender 
+library(tidyverse)
+
+#I want to be able to separate the data, so that the girls (1) and the boys (0) values are separated into two separate columns. The goal is to compare how boys and girls performed and I want to separate the column values, but am finding it difficult to do so. 
+SEDA2$Gender<-NA
+SEDA2$Gender<-ifelse(SEDA2$SexALL==1, "Girl","Boy")
+SEDA2$Gender<-as.numeric(SEDA2$Gender)
+lm(SEDA2$SexALL~SEDA2$CritT)
 
 ```
 #self-criticism
 ```{r}
+library(tidyverse)
+library(car)
 
+CritL<-lm(SEDA2$SexALL~SEDA2$CritT)
+Anova(CritL)
 ```
 #self-esteem
 ```{r}
-
+library(car)
+RosL<-lm(SEDA2$SexALL~SEDA2$RosT)
+Anova(RosL)
 ```
 #depression
 ```{r}
-
+library(car)
+CDIL<-lm(SEDA2$SexALL~SEDA2$CDIt)
+Anova(CDIL)
 ```
 
 3. Repeated measures ANOVA of the adolescents in grade 7 from time 1 to time 3 of their mean depressive symptoms. aov(dv~iv+subj, date), Anova (Ds~Timepoint+Error(Subj)); don't interpret F statistics. 
