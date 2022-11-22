@@ -40,7 +40,7 @@ SEDA2<-SEDA[,c(5,88,101,205)]
 
 ```
 
-3. Repeated measures ANOVA of the adolescents in grade 7 from time 1 to time 3 of their mean depressive symptoms.
+3. Repeated measures ANOVA of the adolescents in grade 7 from time 1 to time 3 of their mean depressive symptoms. aov(dv~iv+subj, date), Anova (Ds~Timepoint+Error(Subj)); don't interpret F statistics. 
 
 ```{r}
 
