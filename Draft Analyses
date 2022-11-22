@@ -16,15 +16,26 @@ cor(SEDA$CritTrms,SEDA$CDItrms,use = "complete.obs")
 cor(SEDA$RosT,SEDA$CDIt,use = "complete.obs")
 ```
 
-2. ANOVA test comparing boys and girls to their levels of self-criticism, self-esteem, and depression.
+2. ANOVA test comparing boys and girls to their levels of self-criticism (CritT), self-esteem(RosT), and depression(CDIt).(boy=0; girl=1); make new columns for boys and girls, self-criticism, self-esteem, and depression. 
+```{r}
+#Columns Set-up 
+SEDA$SexALL #1=girls, 0=boys
+SEDA$CritT
+SEDA$RosT
+SEDA$CDIt
+
+SEDA2<-SEDA[,c(5,88,101,205)]
+
+```
+#self-criticism
 ```{r}
 
 ```
-
+#self-esteem
 ```{r}
 
 ```
-
+#depression
 ```{r}
 
 ```
