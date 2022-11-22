@@ -1,0 +1,36 @@
+---
+title: "Draft Analyses"
+author: "Jessy Lin"
+date: "2022-11-22"
+output: html_document
+---
+1. Correlation between self-criticism with depressive symptoms and self-esteem with depressive symptoms in adolescents in grade 7.
+```{r}
+library(haven)
+SEDA<- read_sav("~/Desktop/SEDA data_deidentified.sav")
+summary(is.na(SEDA$CritTrms))
+cor(SEDA$CritTrms,SEDA$CDItrms,use = "complete.obs")
+```
+
+```{r}
+cor(SEDA$RosT,SEDA$CDIt,use = "complete.obs")
+```
+
+2. ANOVA test comparing boys and girls to their levels of self-criticism, self-esteem, and depression.
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+3. Repeated measures ANOVA of the adolescents in grade 7 from time 1 to time 3 of their mean depressive symptoms.
+
+```{r}
+
+```
