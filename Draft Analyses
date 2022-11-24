@@ -4,6 +4,19 @@ author: "Jessy Lin"
 date: "2022-11-22"
 output: html_document
 ---
+Description: "The aim of this research is to examine the relations between self-cognitions and depression in adolescents, as well as the influence of parenting behaviour on these processes. Two-hundred and forty-three Grade 7 students were followed over a two-year period, with self-report data collected at three time-points. They reported on their self-esteem, self-criticism, and depression, as well as parenting behaviours. Parents also provided self-report data at time one. Noting here that all identifying material has been removed."
+
+Research Questions: 
+1. Is self-criticism better correlated with depressive symptoms than self-esteem in adolescents in grade 7?
+2. Is the relationship between self-criticism, self-esteem, and depression similar when comparing boys and girls?
+3. Is there a significant difference between the adolescents' depressive symptoms  at time 1 and time 3?
+
+Hypothesis:
+1. Self-esteem will have a higher correlation with depression than self-criticism in adolescents in grade 7. 
+2. The relationship between boys and girls when it comes to self-criticism, self-esteem, and depression are not similar; girls will yield higher rates of depression, lower self-esteem, and higher self-criticism. 
+3. Mean depressive symptoms will be higher at time 3 than they were for time 1.
+---
+
 1. Correlation between self-criticism with depressive symptoms and self-esteem with depressive symptoms in adolescents in grade 7.
 ```{r}
 library(haven)
@@ -60,5 +73,6 @@ Anova(CDIL)
 3. Repeated measures ANOVA of the adolescents in grade 7 from time 1 to time 3 of their mean depressive symptoms. aov(dv~iv+subj, date), Anova (Ds~Timepoint+Error(Subj)); don't interpret F statistics. 
 
 ```{r}
-
+aov(CDIt~T1+Error(SEDA))
+aov(CDIt~T3+Error(SEDA))
 ```
