@@ -21,6 +21,7 @@ Hypothesis:
 - CritT= Self-critism (Total)
 - RosT= Self-esteem (Total)
 - CDIt= Depressive symptoms (Total)
+
 ```{r}
 library(haven)
 SEDA<- read_sav("~/Desktop/SEDA data_deidentified.sav")
