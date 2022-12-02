@@ -17,17 +17,25 @@ Hypothesis:
 3. Mean depressive symptoms will be higher at time 3 than they were for time 1.
 ---
 
-1. Correlation between self-criticism with depressive symptoms and self-esteem with depressive symptoms in adolescents in grade 7.
+1. Correlation between self-criticism with depressive symptoms and self-esteem with depressive symptoms in adolescents in grade 7. 
+- CritT= Self-critism (Total)
+- RosT= Self-esteem (Total)
+- CDIt= Depressive symptoms (Total)
 ```{r}
 library(haven)
 SEDA<- read_sav("~/Desktop/SEDA data_deidentified.sav")
-summary(is.na(SEDA$CritTrms))
-cor(SEDA$CritTrms,SEDA$CDItrms,use = "complete.obs")
+summary(is.na(SEDA$CritT))
+cor(SEDA$CritT,SEDA$CDIt,use = "complete.obs")
+ggplot(SEDA, aes(CritT,CDIt)) +geom_point() + geom_smooth(method = "lm")
+#This is the correlation between self-criticism and depressive symptoms in adolescents in grade 7.
 ```
 
 ```{r}
 cor(SEDA$RosT,SEDA$CDIt,use = "complete.obs")
+ggplot(SEDA, aes(RosT,CDIt)) +geom_point() + geom_smooth(method = "lm")
+#This is the correlation between self-esteem and depressive symptoms in adolescents in grade 7.
 ```
+
 2. ANOVA test comparing boys and girls to their levels of self-criticism (CritT), self-esteem(RosT), and depression(CDIt).(boy=0; girl=1); make new columns for boys and girls, self-criticism, self-esteem, and depression. 
 ```{r}
 #Columns Set-up 
@@ -80,8 +88,7 @@ plot(Time1)
 ```
 
 ```{r}
-Time2<- aov(CDIt~T3+ SexALL, data=SEDA)
-summary(Time2)
-plot(Time2)
+Time3<- aov(CDIt~T3+ SexALL, data=SEDA)
+summary(Time3)
+plot(Time3)
 #This repeated measures ANOVA test, tests the adolescents in grade 7 and their mean depressive symptoms at Time 3.
-```
