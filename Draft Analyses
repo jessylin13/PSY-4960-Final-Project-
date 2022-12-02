@@ -73,6 +73,15 @@ Anova(CDIL)
 3. Repeated measures ANOVA of the adolescents in grade 7 from time 1 to time 3 of their mean depressive symptoms. aov(dv~iv+subj, date), Anova (Ds~Timepoint+Error(Subj)); don't interpret F statistics. 
 
 ```{r}
-aov(CDIt~T1+Error(SEDA))
-aov(CDIt~T3+Error(SEDA))
+Time1<-aov(CDIt~T1+ SexALL, data=SEDA)
+summary(Time1)
+plot(Time1)
+#This repeated measures ANOVA test, tests the adolescents in grade 7 and their mean depressive symptoms at Time 1.
+```
+
+```{r}
+Time2<- aov(CDIt~T3+ SexALL, data=SEDA)
+summary(Time2)
+plot(Time2)
+#This repeated measures ANOVA test, tests the adolescents in grade 7 and their mean depressive symptoms at Time 3.
 ```
