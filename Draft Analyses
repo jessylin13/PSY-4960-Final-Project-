@@ -37,46 +37,46 @@ ggplot(SEDA, aes(RosT,CDIt)) +geom_point() + geom_smooth(method = "lm")
 #This is the correlation between self-esteem and depressive symptoms in adolescents in grade 7.
 ```
 
-2. ANOVA test comparing boys and girls to their levels of self-criticism (CritT), self-esteem(RosT), and depression(CDIt).(boy=0; girl=1); make new columns for boys and girls, self-criticism, self-esteem, and depression. 
+2. Repeated Measures ANOVA test comparing boys and girls to their levels of self-criticism (CritT), self-esteem(RosT), and depression(CDIt). In the SEDA dataset gender was dummy coded with 1=Girl and 0=Boy. Below I have included the initial set-up for the columns of interest, those being gender (SexALL;Gender), self-criticism (CritT), self-esteem (RosT), and depressive symptoms (CDIt).
 ```{r}
+library(tidyverse)
+library(car)
+
 #Columns Set-up 
 SEDA$SexALL #1=girls, 0=boys
 SEDA$CritT #self-criticism
 SEDA$RosT #self-esteem
 SEDA$CDIt #depression
 
-#Columns 
-SEDA2<-SEDA[,c(5,88,101,205)]
+#Columns set-up into a smaller dataset for cleaner usage of the data.  
+SEDA2<-SEDA[,c(5,88,101,205),use = "complete.obs"]
 
-#Separating Columns via Gender 
+#Separating Columns via Gender for readability.
 library(tidyverse)
-
-#I want to be able to separate the data, so that the girls (1) and the boys (0) values are separated into two separate columns. The goal is to compare how boys and girls performed and I want to separate the column values, but am finding it difficult to do so. 
-SEDA2$Gender<-NA
-SEDA2$Gender<-ifelse(SEDA2$SexALL==1, "Girl","Boy")
-SEDA2$Gender<-as.numeric(SEDA2$Gender)
-lm(SEDA2$SexALL~SEDA2$CritT)
-
+SEDA2$Gender<-ifelse(SEDA2$SexALL==1, "Girls","Boys")
 ```
-#self-criticism
+#Anova of self-criticism comparing boys and girls.
 ```{r}
-library(tidyverse)
-library(car)
-
-CritL<-lm(SEDA2$SexALL~SEDA2$CritT)
-Anova(CritL)
+aov(SEDA2$CritT~SEDA2$Gender)
+SEDA2 %>% filter(is.na(Gender) == FALSE) %>% 
+   ggplot(aes(x=Gender,y=CritT,color=Gender))+geom_boxplot()+stat_boxplot(geom='errorbar')+ylab("Levels of self-criticism")+scale_color_manual(values=c('#2c7fb8','#a37fdb'))
+#This is an Anova taken to compare boys and girls levels of self-criticism, represented visually through a box plot.
 ```
-#self-esteem
+#Anova of self-esteem comparing boys and girls.
 ```{r}
-library(car)
-RosL<-lm(SEDA2$SexALL~SEDA2$RosT)
-Anova(RosL)
+aov(SEDA2$RosT~SEDA2$Gender)
+SEDA2 %>% filter(is.na(Gender) == FALSE) %>% 
+   ggplot(aes(y=RosT, x=Gender,color=Gender)) +
+   geom_boxplot()+stat_boxplot(geom='errorbar')+ylab("Levels of self-esteem")+scale_color_manual(values=c('#2c7fb8','#a37fdb'))
+#This is an Anova taken to compare boys and girls levels of self-esteem, represented visually through a box plot.
 ```
-#depression
+#Anova of depression comparing boys and girls.
 ```{r}
-library(car)
-CDIL<-lm(SEDA2$SexALL~SEDA2$CDIt)
-Anova(CDIL)
+aov(SEDA2$CDIt~SEDA2$Gender)
+SEDA2 %>% filter(is.na(Gender) == FALSE) %>% 
+   ggplot(aes(y=CDIt, x=Gender,color=Gender)) +
+   geom_boxplot()+stat_boxplot(geom='errorbar')+ylab("Levels of depression")+scale_color_manual(values=c('#2c7fb8','#a37fdb'))
+#This is an Anova taken to compare boys and girls levels of depression, represented visually through a box plot.
 ```
 
 3. Repeated measures ANOVA of the adolescents in grade 7 from time 1 to time 3 of their mean depressive symptoms.
