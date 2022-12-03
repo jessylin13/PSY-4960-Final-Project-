@@ -79,7 +79,10 @@ CDIL<-lm(SEDA2$SexALL~SEDA2$CDIt)
 Anova(CDIL)
 ```
 
-3. Repeated measures ANOVA of the adolescents in grade 7 from time 1 to time 3 of their mean depressive symptoms. aov(dv~iv+subj, date), Anova (Ds~Timepoint+Error(Subj)); don't interpret F statistics. 
+3. Repeated measures ANOVA of the adolescents in grade 7 from time 1 to time 3 of their mean depressive symptoms.
+- T1= Time Point 1
+- T3= Time Point 3
+When comparing the two repeated measures ANOVA test, the adolescents in grade 7 from time 1 to time 3 and their mean depressive symptoms were not significantly different from one another. Their p-values were 0.849 for Time 1 and 0.78 for Time 3.
 
 ```{r}
 Time1<-aov(CDIt~T1+ SexALL, data=SEDA)
@@ -93,3 +96,4 @@ Time3<- aov(CDIt~T3+ SexALL, data=SEDA)
 summary(Time3)
 plot(Time3)
 #This repeated measures ANOVA test, tests the adolescents in grade 7 and their mean depressive symptoms at Time 3.
+```
