@@ -39,46 +39,78 @@ ggplot(SEDA, aes(RosT,CDIt)) +geom_point() + geom_smooth(method = "lm")
 #This is the correlation between self-esteem and depressive symptoms in adolescents in grade 7.
 ```
 
-2. Repeated Measures ANOVA test comparing boys and girls to their levels of self-criticism (CritT), self-esteem(RosT), and depression(CDIt). In the SEDA dataset gender was dummy coded with 1=Girl and 0=Boy. Below I have included the initial set-up for the columns of interest, those being gender (SexALL;Gender), self-criticism (CritT), self-esteem (RosT), and depressive symptoms (CDIt).
+2. One-Way ANOVA test comparing boys and girls on their levels of self-criticism (CritT), self-esteem(RosT), and depression(CDIt). In the SEDA dataset gender was dummy coded with 1=Girl and 0=Boy. Below I have included the initial set-up for the columns of interest, those being gender (SexALL;Gender), self-criticism (CritT), self-esteem (RosT), and depressive symptoms (CDIt). I have also included the analyses of the three one-way Anovas comparing boys and girls in their scores of self-criticism, self-esteem, and depression. 
 ```{r}
+#Loading the appropriate packages to run the code below: 
 library(tidyverse)
+library(ggplot2)
 library(car)
-
-#Columns Set-up 
-SEDA$SexALL #1=girls, 0=boys
-SEDA$CritT #self-criticism
-SEDA$RosT #self-esteem
-SEDA$CDIt #depression
-
-#Columns set-up into a smaller dataset for cleaner usage of the data.  
+library(jtools)
+```
+The following columns are of interest as it relates to our secondary analyses:  
+Gender(SEDA$Gender)is coded as 1=girls, 0=boys.
+Self-criticism(SEDA$CritT)
+Self-esteem(SEDA$RosT)
+Depression (SEDA$CDIt)
+```{r}
+#Columns Set-up: These columns are set-up for the purposes of cleaner secondary data analysis with the SEDA dataset. 
 SEDA2<-SEDA[,c(5,88,101,205),use = "complete.obs"]
 
 #Separating Columns via Gender for readability.
 library(tidyverse)
-SEDA2$Gender<-ifelse(SEDA2$SexALL==1, "Girls","Boys")
+SEDA2$Gender<-ifelse(SEDA$SexALL==1,"Girls", "Boys")
+
+#Checking the class of gender to ensure the correct Anova output is reached. The class of gender is changed to factor. 
+class(SEDA2$Gender)
+SEDA2$Gender<-as.factor(SEDA2$Gender)
 ```
-#Anova of self-criticism comparing boys and girls.
+
+This is a one-way Anova of self-criticism comparing boys and girls; it is represented visually with the use of a box and whiskers plot. 
 ```{r}
-aov(SEDA2$CritT~SEDA2$Gender)
+#Analyses;One-Way Anova
+summary(aov(CritT~Gender, data=SEDA2))
+
+#Boxplot graph of One-Way Anova
 SEDA2 %>% filter(is.na(Gender) == FALSE) %>% 
-   ggplot(aes(x=Gender,y=CritT,color=Gender))+geom_boxplot()+stat_boxplot(geom='errorbar')+ylab("Levels of self-criticism")+scale_color_manual(values=c('#2c7fb8','#a37fdb'))
-#This is an Anova taken to compare boys and girls levels of self-criticism, represented visually through a box plot.
+   ggplot(aes(x=Gender,y=CritT,color=Gender))+geom_boxplot()+stat_boxplot(geom='errorbar')+ylab("Levels of self-criticism")+scale_color_manual(values=c('#2c7fb8','#a37fdb'))+ggtitle("Self-criticism in Boys and Girls")+theme_apa()
 ```
-#Anova of self-esteem comparing boys and girls.
+
+This is a one-way Anova of self-esteem comparing boys and girls; it is represented visually with the use of a box and whiskers plot. 
 ```{r}
-aov(SEDA2$RosT~SEDA2$Gender)
+#Analyses;One-Way Anova
+aov(RosT~Gender, data=SEDA2)
+
+#Boxplot graph of One-Way Anova
 SEDA2 %>% filter(is.na(Gender) == FALSE) %>% 
    ggplot(aes(y=RosT, x=Gender,color=Gender)) +
-   geom_boxplot()+stat_boxplot(geom='errorbar')+ylab("Levels of self-esteem")+scale_color_manual(values=c('#2c7fb8','#a37fdb'))
-#This is an Anova taken to compare boys and girls levels of self-esteem, represented visually through a box plot.
+   geom_boxplot()+stat_boxplot(geom='errorbar')+ylab("Levels of self-esteem")+scale_color_manual(values=c('#2c7fb8','#a37fdb'))+ggtitle("Self-esteem in Boys and Girls")+theme_apa()
 ```
-#Anova of depression comparing boys and girls.
+
+This is a one-way Anova of depression comparing boys and girls; it is represented visually with the use of a box and whiskers plot. 
 ```{r}
-aov(SEDA2$CDIt~SEDA2$Gender)
+#Analyses;One-Way Anova
+aov(CDIt~Gender, data=SEDA2)
+
+#Boxplot graph of One-Way Anova
 SEDA2 %>% filter(is.na(Gender) == FALSE) %>% 
-   ggplot(aes(y=CDIt, x=Gender,color=Gender)) +
-   geom_boxplot()+stat_boxplot(geom='errorbar')+ylab("Levels of depression")+scale_color_manual(values=c('#2c7fb8','#a37fdb'))
-#This is an Anova taken to compare boys and girls levels of depression, represented visually through a box plot.
+   ggplot(aes(y=CDIt, x=Gender,color=Gender))+
+   geom_boxplot()+stat_boxplot(geom='errorbar')+ylab("Levels of depression")+scale_color_manual(values=c('#2c7fb8','#a37fdb'))+ggtitle("Depression in Boys and Girls")+theme_apa()
+```
+
+Descriptive Statistics were also taken to further compare the means of self-criticism, self-esteem, and depression in boys and girls. I began by subsetting the SEDA2 dataset creating two separate datasets of boys and girls and then using the summary function for descriptives in these two groups.
+Descriptive Statistics for Girls 
+```{r}
+Girls<-SEDA2 %>% filter(SEDA$SexALL==1)
+summary(girls$CritT)#mean=36.59
+summary(girls$RosT)#mean=31.09
+summary(girls$CDIt)#mean=4.256
+```
+Descriptive Statistics for Boys
+```{r}
+Boys<-SEDA2 %>% filter(SEDA2$SexALL==0)
+summary(boys$CritT)#mean=33.71
+summary(boys$RosT)#mean=30.28
+summary(boys$CDIt)#mean=4.684
 ```
 
 3. Repeated measures ANOVA of the adolescents in grade 7 from time 1 to time 3 of their mean depressive symptoms.
