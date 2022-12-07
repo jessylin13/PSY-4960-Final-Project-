@@ -48,7 +48,6 @@ ggplot(SEDA, aes(CritT,CDIt)) +geom_point() + geom_smooth(method = "lm")+ggtitle
 cor(SEDA$RosT,SEDA$CDIt,use = "complete.obs")
 library(ggplot2)
 ggplot(SEDA, aes(RosT,CDIt)) +geom_point() + geom_smooth(method ="lm") +ggtitle("Self-Esteem vs Depressive Symptoms") +theme_apa(
-  
   legend.pos = "right",
   legend.use.title = FALSE,
   legend.font.size = 12,
