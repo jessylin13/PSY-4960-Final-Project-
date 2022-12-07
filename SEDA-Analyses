@@ -25,11 +25,40 @@ Hypothesis:
 ```{r}
 library(haven)
 SEDA<- read_sav("~/Desktop/SEDA data_deidentified.sav")
+```
+
+```{r}
 summary(is.na(SEDA$CritT))
 cor(SEDA$CritT,SEDA$CDIt,use = "complete.obs")
 library(ggplot2)
-ggplot(SEDA, aes(CritT,CDIt)) +geom_point() + geom_smooth(method = "lm")
+ggplot(SEDA, aes(CritT,CDIt)) +geom_point() + geom_smooth(method = "lm")+ggtitle("Self-Criticism vs Depressive Symptoms") + theme_apa(
+  legend.pos = "right",
+  legend.use.title = FALSE,
+  legend.font.size = 12,
+  x.font.size = 12,
+  y.font.size = 12,
+  facet.title.size = 12,
+  remove.y.gridlines = TRUE,
+  remove.x.gridlines = TRUE
+) + xlab("Self-Criticism") +ylab("Depressive Symptoms")
 #This is the correlation between self-criticism and depressive symptoms in adolescents in grade 7.
+```
+
+```{r}
+cor(SEDA$RosT,SEDA$CDIt,use = "complete.obs")
+library(ggplot2)
+ggplot(SEDA, aes(RosT,CDIt)) +geom_point() + geom_smooth(method ="lm") +ggtitle("Self-Esteem vs Depressive Symptoms") +theme_apa(
+  
+  legend.pos = "right",
+  legend.use.title = FALSE,
+  legend.font.size = 12,
+  x.font.size = 12,
+  y.font.size = 12,
+  facet.title.size = 12,
+  remove.y.gridlines = TRUE,
+  remove.x.gridlines = TRUE
+)+ xlab("Self-Esteem") +ylab("Depressive Symptoms")
+#This is the correlation between self-esteem and depressive symptoms in adolescents in grade 7.
 ```
 
 ```{r}
